@@ -45,7 +45,6 @@ export default function CardDetails() {
       <div className="card-d">
         <div className="card-image-d">
           <img src={event.imgUrl} alt="event" />
-          <hr/>
         </div>
         <div className="card-content-d">
           <div className="card-title-d">

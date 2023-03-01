@@ -22,7 +22,6 @@ export default function Card({ name, description, venue, imgUrl, datetime, areSe
     <div className="card">
       <div className="card-image" onClick={() => clickHandler(id)}>
         <img src={imgUrl} alt="event" />
-        <hr/>
       </div>
       <div className="card-content" onClick={() => clickHandler(id)}>
         <div className="card-title">
