@@ -64,7 +64,6 @@ export default function Card({ name, description, venue, imgUrl, datetime, areSe
           </button>
         </div>
       </div>
-     
     </div>
   );
 }
