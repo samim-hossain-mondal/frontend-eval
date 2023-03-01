@@ -56,7 +56,10 @@ export default function Card({ name, description, venue, imgUrl, datetime, areSe
         <div className='bookmark-btn'>
           <button>
             {
-              isBookmarked ? <FontAwesomeIcon icon={faBookmarkSolid} color='#EA8282' fontSize='25'/> : <FontAwesomeIcon icon={faBookmarkRegular} color='#EA8282' fontSize='25'/>
+              isBookmarked ? 
+                <FontAwesomeIcon icon={faBookmarkSolid} color='#EA8282' fontSize='25'/> 
+                : 
+                <FontAwesomeIcon icon={faBookmarkRegular} color='#EA8282' fontSize='25'/>
             }
           </button>
         </div>

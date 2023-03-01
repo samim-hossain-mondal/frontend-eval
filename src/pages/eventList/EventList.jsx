@@ -26,10 +26,13 @@ export default function EventList() {
   const searchChangeHandler = (searchEvents) => {
     setEvents(searchEvents);
   };
+  const arrowHandler = () => {
+    
+  };
   return (
     <div className='event-list'>
       <div className='event-list-header'>
-        <Filter />
+        <Filter arrowHandler={arrowHandler}/>
         <Search searchChangeHandler={searchChangeHandler} data={data}/>
       </div>
       <div className='event-list-body'>
