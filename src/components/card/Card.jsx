@@ -1,13 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons';
 import { faBookmark as faBookmarkSolid} from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import proptypes from 'prop-types';
+import {BASE_URL, API_URL} from '../../constants/url';
 import './Card.css';
 
 export default function Card({ name, description, venue, imgUrl, datetime, areSeatsAvailable, clickHandler, id, isRegistered, isBookmarked}) {
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const bookmarkHandler = async () => {
+    setBookmark(!bookmark);
+    await axios.patch(`${BASE_URL}/${API_URL}/${id}`, {
+      isBookmarked: !bookmark
+    });
+  };
+
   return (
     <div className="card">
       <div className="card-image" onClick={() => clickHandler(id)}>
@@ -56,10 +66,7 @@ export default function Card({ name, description, venue, imgUrl, datetime, areSe
         <div className='bookmark-btn'>
           <button>
             {
-              isBookmarked ? 
-                <FontAwesomeIcon icon={faBookmarkSolid} color='#EA8282' fontSize='25'/> 
-                : 
-                <FontAwesomeIcon icon={faBookmarkRegular} color='#EA8282' fontSize='25'/>
+              <FontAwesomeIcon icon={bookmark ? faBookmarkSolid : faBookmarkRegular} onClick={bookmarkHandler} color='#EA8282' fontSize='25'/>
             }
           </button>
         </div>
