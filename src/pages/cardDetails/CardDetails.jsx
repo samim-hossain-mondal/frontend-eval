@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons';
@@ -10,15 +11,35 @@ import './CardDetails.css';
 
 export default function CardDetails() {
   const { id } = useParams();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [buttonText, setButtonText] = useState('Register');
   const [event, setEvent] = useState({});
   const fetchEvent = async () => {
     const response = await fetch(`${BASE_URL}/${API_URL}/${id}`);
     const data = await response.json();
     setEvent(data);
+    setIsBookmarked(data.isBookmarked);
+    setIsRegistered(data.isRegistered);
+    setButtonText(data.isRegistered ? 'Unregister' : 'Register');
   };
   useEffect(() => {
     fetchEvent();
   }, []);
+
+  const bookmarkHandler = async () => {
+    setIsBookmarked(!isBookmarked);
+    await axios.patch(`${BASE_URL}/${API_URL}/${id}`, {
+      isBookmarked: !isBookmarked,
+    });
+  };
+  const registerHandler = async () => {
+    setIsRegistered(!isRegistered);
+    setButtonText(!isRegistered ? 'Unregister' : 'Register');
+    await axios.patch(`${BASE_URL}/${API_URL}/${id}`, {
+      isRegistered: !isRegistered,
+    });
+  };
   return (
     <div className='card-details'>
       <div className="card-d">
@@ -45,10 +66,10 @@ export default function CardDetails() {
         <div className='card-footer-d'>
           <div>
             {
-              event.isRegistered ? 
+              isRegistered ? 
                 (
                   <div className='registration-d'>
-                    <FontAwesomeIcon icon= {faCircleCheck} fontSize='25' color='#A0F3AD' /> 
+                    <FontAwesomeIcon icon= {faCircleCheck} fontSize='25' color='#A0F3AD' onClick={registerHandler}/> 
                     <p>REGISTERED</p>
                   </div>
                 ) 
@@ -68,31 +89,20 @@ export default function CardDetails() {
           <div className='bookmark-btn-d'>
             <button>
               {
-                event.isBookmarked ? 
-                  <FontAwesomeIcon icon={faBookmarkSolid} color='#EA8282' fontSize='25'/> 
-                  : 
-                  <FontAwesomeIcon icon={faBookmarkRegular} color='#EA8282' fontSize='25'/>
+                <FontAwesomeIcon icon={ isBookmarked ? faBookmarkSolid : faBookmarkRegular} color='#EA8282' fontSize='25' onClick={bookmarkHandler}/> 
               }
             </button>
           </div>
         </div>
         <div className='register-unregister'>
           {
-            event.isRegistered ?
-              ( 
-                <button className='cancel-btn'><b>UNREGISTER</b></button>
+            event.areSeatsAvailable ?
+              (
+                <button className='register-btn-d' onClick={registerHandler}><b>{buttonText}</b></button>
               )
               :
               (
-                event.areSeatsAvailable ?
-
-                  (
-                    <button className='register-btn'><b>REGISTER</b></button>
-                  )
-                  :
-                  (
-                    <a></a>
-                  )
+                <a></a>
               )
           }
         </div>
