@@ -1,15 +1,20 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons';
+import { faBookmark as faBookmarkSolid} from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import proptypes from 'prop-types';
 import './Card.css';
 
-export default function Card({ name, description, venue, imgUrl, datetime, areSeatsAvailable, clickHandler, id}) {
+export default function Card({ name, description, venue, imgUrl, datetime, areSeatsAvailable, clickHandler, id, isRegistered, isBookmarked}) {
   return (
-    <div className="card" onClick={() => clickHandler(id)}>
-      <div className="card-image">
+    <div className="card">
+      <div className="card-image" onClick={() => clickHandler(id)}>
         <img src={imgUrl} alt="event" />
         <hr/>
       </div>
-      <div className="card-content">
+      <div className="card-content" onClick={() => clickHandler(id)}>
         <div className="card-title">
           <h3>{name}</h3>
         </div>
@@ -17,20 +22,46 @@ export default function Card({ name, description, venue, imgUrl, datetime, areSe
           <p>{description}</p>
         </div>
         <div className="card-venue">
-          <p>VENUE: {venue}</p>
-        </div>
-        <div>
-          <p>DATE: {datetime}</p>
-        </div>
-        <div className='card-footer'>
           <div>
-            {areSeatsAvailable ? <p>Seats Available</p> : <p>Seats Not Available</p>}
+            <a>VENUE: {venue}</a>
           </div>
           <div>
-            <button>Bookmark</button>
+            <a>DATE: {datetime}</a>
           </div>
         </div>
       </div>
+      <div className='card-footer'>
+        <div>
+          {
+            isRegistered ? 
+              (
+                <div className='registration'>
+                  <FontAwesomeIcon icon= {faCircleCheck} fontSize='25' color='#A0F3AD' /> 
+                  <p>REGISTERED</p>
+                </div>
+              ) 
+              : areSeatsAvailable ? 
+                (
+                  <p></p>
+                ) 
+                : 
+                (
+                  <div className='seats'>
+                    <FontAwesomeIcon icon= {faCircleXmark} fontSize='25' color='#ECECAB'/>
+                    <p>NO SEATS AVAILABLE</p>
+                  </div>
+                )
+          }
+        </div>
+        <div className='bookmark-btn'>
+          <button>
+            {
+              isBookmarked ? <FontAwesomeIcon icon={faBookmarkSolid} color='#EA8282' fontSize='25'/> : <FontAwesomeIcon icon={faBookmarkRegular} color='#EA8282' fontSize='25'/>
+            }
+          </button>
+        </div>
+      </div>
+     
     </div>
   );
 }
