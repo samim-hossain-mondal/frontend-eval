@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Display:wght@700&family=Raleway:wght@100&display=swap');
+.heading{
+    font-size: 3rem;
+    font-weight: 200;
+    font-family: 'Big Shoulders Inline Display', cursive;
+    color: #fff;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left: 15%;
+    background-color: #000;
+    border-bottom: 1px solid #fff;
+}

@@ -1,0 +1,15 @@
+.search{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.search-input > input {
+    width: 12rem;
+    height: 2rem;
+    border: 1px solid #9B9999;
+    border-radius: 8px;
+}
